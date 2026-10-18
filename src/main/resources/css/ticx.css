@@ -1,0 +1,422 @@
+/* =====================================================
+   BASE
+   ===================================================== */
+
+.root {
+    -fx-background-color: #f4f7fb;
+    -fx-font-family: "Segoe UI";
+}
+
+
+/* =====================================================
+   MAIN TITLE
+   ===================================================== */
+
+.app-title {
+    -fx-font-size: 52px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #111827;
+}
+
+.app-subtitle {
+    -fx-font-size: 18px;
+    -fx-text-fill: #6b7280;
+}
+
+
+/* =====================================================
+   MAIN MENU
+   ===================================================== */
+
+.menu-section-title {
+    -fx-font-size: 21px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #374151;
+}
+
+.game-card {
+    -fx-background-color: white;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 1px;
+    -fx-background-radius: 16px;
+    -fx-border-radius: 16px;
+    -fx-padding: 10px 22px;
+    -fx-cursor: hand;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.game-card:hover {
+    -fx-background-color: #f8faff;
+    -fx-border-color: #6366f1;
+    -fx-border-width: 2px;
+    -fx-translate-y: -2px;
+}
+
+.game-card:pressed {
+    -fx-background-color: #eef2ff;
+    -fx-translate-y: 1px;
+}
+
+.game-card-icon {
+    -fx-font-size: 27px;
+}
+
+.game-card-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #111827;
+}
+
+.game-card-description {
+    -fx-font-size: 13px;
+    -fx-text-fill: #6b7280;
+}
+
+.game-card-tag {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4f46e5;
+    -fx-background-color: #eef2ff;
+    -fx-background-radius: 8px;
+    -fx-padding: 3px 8px;
+}
+
+.theme-button {
+    -fx-background-color: white;
+    -fx-text-fill: #374151;
+    -fx-border-color: #d1d5db;
+    -fx-border-width: 1px;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 25px;
+    -fx-cursor: hand;
+}
+
+.theme-button:hover {
+    -fx-background-color: #f3f4f6;
+    -fx-border-color: #6366f1;
+}
+
+.menu-footer {
+    -fx-font-size: 12px;
+    -fx-text-fill: #9ca3af;
+}
+
+
+/* =====================================================
+   SCOREBOARD
+   ===================================================== */
+
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 18px;
+    -fx-border-radius: 18px;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 1px;
+    -fx-padding: 16px 25px;
+}
+
+.score-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #111827;
+}
+
+.score-label {
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #374151;
+}
+
+
+/* =====================================================
+   PLAYER CARDS
+   ===================================================== */
+
+.player-card {
+    -fx-background-color: white;
+    -fx-background-radius: 16px;
+    -fx-border-radius: 16px;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 2px;
+    -fx-padding: 12px 35px;
+    -fx-min-width: 150px;
+}
+
+.player-card.active-player {
+    -fx-border-color: #4f46e5;
+    -fx-background-color: #eef2ff;
+    -fx-effect:
+        dropshadow(
+            gaussian,
+            rgba(79, 70, 229, 0.25),
+            12,
+            0.2,
+            0,
+            3
+        );
+}
+
+.player-name {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #6b7280;
+}
+
+.player-symbol {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+}
+
+.x-symbol {
+    -fx-text-fill: #2563eb;
+}
+
+.o-symbol {
+    -fx-text-fill: #db2777;
+}
+
+.difficulty-label {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #6366f1;
+}
+
+
+/* =====================================================
+   TURN LABEL
+   ===================================================== */
+
+.turn-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #374151;
+}
+
+
+/* =====================================================
+   BOARD
+   ===================================================== */
+
+.board-cell {
+    -fx-background-color: white;
+    -fx-border-color: #d1d5db;
+    -fx-border-width: 2px;
+    -fx-background-radius: 16px;
+    -fx-border-radius: 16px;
+    -fx-font-size: 42px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.board-cell:hover {
+    -fx-background-color: #eef2ff;
+    -fx-border-color: #6366f1;
+}
+
+.board-cell:disabled {
+    -fx-opacity: 1.0;
+}
+
+.x-cell {
+    -fx-text-fill: #2563eb;
+}
+
+.o-cell {
+    -fx-text-fill: #db2777;
+}
+
+
+/* =====================================================
+   WINNING CELL
+   ===================================================== */
+
+.winning-cell {
+    -fx-background-color: #dcfce7;
+    -fx-border-color: #16a34a;
+    -fx-border-width: 3px;
+}
+
+.winning-cell.x-cell {
+    -fx-text-fill: #1d4ed8;
+}
+
+.winning-cell.o-cell {
+    -fx-text-fill: #be185d;
+}
+
+
+/* =====================================================
+   BUTTONS
+   ===================================================== */
+
+.primary-button {
+    -fx-background-color: #4f46e5;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-padding: 11px 24px;
+    -fx-cursor: hand;
+}
+
+.primary-button:hover {
+    -fx-background-color: #4338ca;
+}
+
+.secondary-button {
+    -fx-background-color: white;
+    -fx-text-fill: #374151;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-border-color: #d1d5db;
+    -fx-border-width: 1px;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-padding: 11px 24px;
+    -fx-cursor: hand;
+}
+
+.secondary-button:hover {
+    -fx-background-color: #f3f4f6;
+}
+
+
+/* =====================================================
+   DARK THEME
+   ===================================================== */
+
+.dark-theme {
+    -fx-background-color: #0f172a;
+}
+
+
+/* ---------- Main Menu ---------- */
+
+.dark-theme .app-title {
+    -fx-text-fill: white;
+}
+
+.dark-theme .app-subtitle {
+    -fx-text-fill: #cbd5e1;
+}
+
+.dark-theme .menu-section-title {
+    -fx-text-fill: #f1f5f9;
+}
+
+.dark-theme .game-card {
+    -fx-background-color: #1e293b;
+    -fx-border-color: #334155;
+}
+
+.dark-theme .game-card:hover {
+    -fx-background-color: #263449;
+    -fx-border-color: #818cf8;
+}
+
+.dark-theme .game-card-title {
+    -fx-text-fill: white;
+}
+
+.dark-theme .game-card-description {
+    -fx-text-fill: #94a3b8;
+}
+
+.dark-theme .game-card-tag {
+    -fx-text-fill: #c7d2fe;
+    -fx-background-color: #312e81;
+}
+
+.dark-theme .theme-button {
+    -fx-background-color: #1e293b;
+    -fx-text-fill: white;
+    -fx-border-color: #475569;
+}
+
+.dark-theme .theme-button:hover {
+    -fx-background-color: #334155;
+}
+
+.dark-theme .menu-footer {
+    -fx-text-fill: #64748b;
+}
+
+
+/* ---------- Scoreboard ---------- */
+
+.dark-theme .card {
+    -fx-background-color: #1e293b;
+    -fx-border-color: #334155;
+}
+
+.dark-theme .score-title {
+    -fx-text-fill: white;
+}
+
+.dark-theme .score-label {
+    -fx-text-fill: #e2e8f0;
+}
+
+
+/* ---------- Player Cards ---------- */
+
+.dark-theme .player-card {
+    -fx-background-color: #1e293b;
+    -fx-border-color: #475569;
+}
+
+.dark-theme .player-card.active-player {
+    -fx-background-color: #312e81;
+    -fx-border-color: #818cf8;
+}
+
+.dark-theme .player-name {
+    -fx-text-fill: #cbd5e1;
+}
+
+.dark-theme .difficulty-label {
+    -fx-text-fill: #a5b4fc;
+}
+
+
+/* ---------- Turn ---------- */
+
+.dark-theme .turn-label {
+    -fx-text-fill: #f1f5f9;
+}
+
+
+/* ---------- Board ---------- */
+
+.dark-theme .board-cell {
+    -fx-background-color: #1e293b;
+    -fx-border-color: #475569;
+    -fx-text-fill: white;
+}
+
+.dark-theme .board-cell:hover {
+    -fx-background-color: #334155;
+    -fx-border-color: #818cf8;
+}
+
+.dark-theme .winning-cell {
+    -fx-background-color: #14532d;
+    -fx-border-color: #22c55e;
+}
+
+
+/* ---------- Buttons ---------- */
+
+.dark-theme .secondary-button {
+    -fx-background-color: #1e293b;
+    -fx-text-fill: white;
+    -fx-border-color: #475569;
+}
+
+.dark-theme .secondary-button:hover {
+    -fx-background-color: #334155;
+}
