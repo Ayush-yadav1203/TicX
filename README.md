@@ -16,7 +16,7 @@ JavaFX
 Maven
 Git/GitHub
 
-▶ How to Run
+▶ How to Run (pending)
 Screenshots
 Project Structure
 Future Improvements
