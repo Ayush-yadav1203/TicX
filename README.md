@@ -16,7 +16,16 @@ JavaFX
 Maven
 Git/GitHub
 
-▶ How to Run (pending)
-Screenshots
-Project Structure
-Future Improvements
+▶️ How to Run
+Make sure Java 24 and Maven are installed.
+
+
+🎯 Future Improvements
+- 🔊 Sound effects
+- ⚙️ Settings screen
+- 📈 Advanced player statistics
+- 🏅 Achievement system
+- 🌐 Online multiplayer
+- 🎨 More themes
+👨‍💻 Author
+Ayush Yadav
