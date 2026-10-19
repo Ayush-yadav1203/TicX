@@ -58,21 +58,10 @@ public class ProfileManager {
         return true;
     }
 
-    public int getWins() {
-        return wins;
-    }
-
-    public int getLosses() {
-        return losses;
-    }
-
-    public int getDraws() {
-        return draws;
-    }
-
-    public int getGamesPlayed() {
-        return gamesPlayed;
-    }
+    public int getWins() { return wins; }
+    public int getLosses() { return losses; }
+    public int getDraws() { return draws; }
+    public int getGamesPlayed() { return gamesPlayed; }
 
     public void addWin() {
         wins++;
@@ -184,6 +173,13 @@ public class ProfileManager {
                 && hasProfile()) {
             saveProfile();
             saveCurrentProfile();
+
+            try {
+                Files.deleteIfExists(LEGACY_PROFILE_FILE);
+            } catch (IOException e) {
+                System.out.println("Unable to remove old profile file.");
+            }
+
             return;
         }
 
