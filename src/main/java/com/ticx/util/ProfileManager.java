@@ -1,85 +1,62 @@
 package com.ticx.util;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Locale;
 
 public class ProfileManager {
 
     private static final Path DATA_FOLDER =
-            Paths.get(
-                    System.getProperty("user.home"),
-                    "TicXData"
-            );
+            Paths.get(System.getProperty("user.home"), "TicXData");
 
-    private static final Path PROFILE_FILE =
-            DATA_FOLDER.resolve(
-                    "ticx_profile.txt"
-            );
+    private static final Path PROFILES_FOLDER =
+            DATA_FOLDER.resolve("profiles");
+
+    private static final Path CURRENT_PROFILE_FILE =
+            DATA_FOLDER.resolve("ticx_current_profile.txt");
+
+    private static final Path LEGACY_PROFILE_FILE =
+            DATA_FOLDER.resolve("ticx_profile.txt");
 
     private String playerName;
-
     private int wins;
-
     private int losses;
-
     private int draws;
-
     private int gamesPlayed;
 
     public ProfileManager() {
-        loadProfile();
+        loadCurrentProfile();
     }
-
-    // ==========================================
-    // PLAYER NAME
-    // ==========================================
 
     public String getPlayerName() {
         return playerName;
     }
 
-    // ==========================================
-    // CHECK PROFILE
-    // ==========================================
-
     public boolean hasProfile() {
-
-        return playerName != null
-                && !playerName.trim().isEmpty();
+        return playerName != null && !playerName.trim().isEmpty();
     }
 
-    // ==========================================
-    // CREATE PROFILE
-    // ==========================================
-
     public boolean createProfile(String name) {
-
-        if (name == null) {
-            return false;
-        }
+        if (name == null) return false;
 
         name = name.trim();
-
-        if (name.isEmpty()) {
-            return false;
-        }
-
-        if (name.length() > 20) {
-            return false;
-        }
+        if (name.isEmpty() || name.length() > 20) return false;
 
         playerName = name;
 
-        saveProfile();
+        if (!loadProfileFile(profilePath(playerName))) {
+            resetStats();
+        }
 
+        saveProfile();
+        saveCurrentProfile();
         return true;
     }
-
-    // ==========================================
-    // STATISTICS
-    // ==========================================
 
     public int getWins() {
         return wins;
@@ -97,56 +74,53 @@ public class ProfileManager {
         return gamesPlayed;
     }
 
-    // ==========================================
-    // ADD WIN
-    // ==========================================
-
     public void addWin() {
-
         wins++;
-
         gamesPlayed++;
-
         saveProfile();
     }
-
-    // ==========================================
-    // ADD LOSS
-    // ==========================================
 
     public void addLoss() {
-
         losses++;
-
         gamesPlayed++;
-
         saveProfile();
     }
-
-    // ==========================================
-    // ADD DRAW
-    // ==========================================
 
     public void addDraw() {
-
         draws++;
-
         gamesPlayed++;
-
         saveProfile();
     }
 
-    // ==========================================
-    // SAVE PROFILE
-    // ==========================================
-
-    private void saveProfile() {
+    public static String getPlayerId(String name) {
+        String normalized = name == null
+                ? "guest"
+                : name.trim().toLowerCase(Locale.ROOT);
 
         try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(normalized.getBytes(StandardCharsets.UTF_8));
+            StringBuilder result = new StringBuilder();
 
-            Files.createDirectories(
-                    DATA_FOLDER
-            );
+            for (byte value : hash) {
+                result.append(String.format("%02x", value));
+            }
+
+            return result.toString();
+        } catch (NoSuchAlgorithmException e) {
+            return Integer.toHexString(normalized.hashCode());
+        }
+    }
+
+    private Path profilePath(String name) {
+        return PROFILES_FOLDER.resolve(getPlayerId(name) + ".txt");
+    }
+
+    private void saveProfile() {
+        if (!hasProfile()) return;
+
+        try {
+            Files.createDirectories(PROFILES_FOLDER);
 
             String data =
                     "NAME=" + playerName + "\n"
@@ -156,142 +130,128 @@ public class ProfileManager {
                     + "GAMES=" + gamesPlayed;
 
             Files.writeString(
-                    PROFILE_FILE,
-                    data
+                    profilePath(playerName),
+                    data,
+                    StandardCharsets.UTF_8
             );
-
         } catch (IOException e) {
-
-            System.out.println(
-                    "Unable to save profile."
-            );
-
+            System.out.println("Unable to save profile.");
             e.printStackTrace();
         }
     }
 
-    // ==========================================
-    // LOAD PROFILE
-    // ==========================================
-
-    private void loadProfile() {
-
-        if (!Files.exists(PROFILE_FILE)) {
-
-            playerName = null;
-
-            wins = 0;
-
-            losses = 0;
-
-            draws = 0;
-
-            gamesPlayed = 0;
-
-            return;
-        }
+    private void saveCurrentProfile() {
+        if (!hasProfile()) return;
 
         try {
-
-            String data =
-                    Files.readString(
-                            PROFILE_FILE
-                    );
-
-            String[] lines =
-                    data.split("\\R");
-
-            for (String line : lines) {
-
-                line = line.trim();
-
-                if (line.startsWith("NAME=")) {
-
-                    playerName =
-                            line.substring(5);
-
-                } else if (line.startsWith("WINS=")) {
-
-                    wins =
-                            Integer.parseInt(
-                                    line.substring(5)
-                            );
-
-                } else if (line.startsWith("LOSSES=")) {
-
-                    losses =
-                            Integer.parseInt(
-                                    line.substring(7)
-                            );
-
-                } else if (line.startsWith("DRAWS=")) {
-
-                    draws =
-                            Integer.parseInt(
-                                    line.substring(6)
-                            );
-
-                } else if (line.startsWith("GAMES=")) {
-
-                    gamesPlayed =
-                            Integer.parseInt(
-                                    line.substring(6)
-                            );
-
-                } else if (
-                        playerName == null
-                                && !line.isEmpty()) {
-
-                    // Supports the old profile format
-                    playerName = line;
-                }
-            }
-
-        } catch (Exception e) {
-
-            System.out.println(
-                    "Unable to load profile."
+            Files.createDirectories(DATA_FOLDER);
+            Files.writeString(
+                    CURRENT_PROFILE_FILE,
+                    playerName,
+                    StandardCharsets.UTF_8
             );
-
-            playerName = null;
-
-            wins = 0;
-
-            losses = 0;
-
-            draws = 0;
-
-            gamesPlayed = 0;
+        } catch (IOException e) {
+            System.out.println("Unable to save current profile.");
         }
     }
 
-    // ==========================================
-    // LOGOUT
-    // ==========================================
-
-    public void logout() {
-
+    private void loadCurrentProfile() {
+        resetStats();
         playerName = null;
 
-        wins = 0;
+        if (Files.exists(CURRENT_PROFILE_FILE)) {
+            try {
+                String currentName = Files.readString(
+                        CURRENT_PROFILE_FILE,
+                        StandardCharsets.UTF_8
+                ).trim();
 
-        losses = 0;
+                if (!currentName.isEmpty()) {
+                    playerName = currentName;
+                    if (!loadProfileFile(profilePath(playerName))) {
+                        resetStats();
+                    }
+                    return;
+                }
+            } catch (IOException e) {
+                System.out.println("Unable to load current profile.");
+            }
+        }
 
-        draws = 0;
+        // One-time migration from the old single-profile format.
+        if (Files.exists(LEGACY_PROFILE_FILE)
+                && loadProfileFile(LEGACY_PROFILE_FILE)
+                && hasProfile()) {
+            saveProfile();
+            saveCurrentProfile();
+            return;
+        }
 
-        gamesPlayed = 0;
+        resetStats();
+        playerName = null;
+    }
+
+    private boolean loadProfileFile(Path file) {
+        if (!Files.exists(file)) return false;
 
         try {
+            String data = Files.readString(file, StandardCharsets.UTF_8);
 
-            Files.deleteIfExists(
-                    PROFILE_FILE
-            );
+            String loadedName = null;
+            int loadedWins = 0;
+            int loadedLosses = 0;
+            int loadedDraws = 0;
+            int loadedGames = 0;
 
+            for (String line : data.split("\\R")) {
+                line = line.trim();
+
+                if (line.startsWith("NAME=")) {
+                    loadedName = line.substring(5).trim();
+                } else if (line.startsWith("WINS=")) {
+                    loadedWins = Integer.parseInt(line.substring(5).trim());
+                } else if (line.startsWith("LOSSES=")) {
+                    loadedLosses = Integer.parseInt(line.substring(7).trim());
+                } else if (line.startsWith("DRAWS=")) {
+                    loadedDraws = Integer.parseInt(line.substring(6).trim());
+                } else if (line.startsWith("GAMES=")) {
+                    loadedGames = Integer.parseInt(line.substring(6).trim());
+                } else if (loadedName == null && !line.isEmpty()) {
+                    loadedName = line;
+                }
+            }
+
+            if (loadedName == null || loadedName.isEmpty()) return false;
+
+            playerName = loadedName;
+            wins = Math.max(0, loadedWins);
+            losses = Math.max(0, loadedLosses);
+            draws = Math.max(0, loadedDraws);
+            gamesPlayed = Math.max(0, loadedGames);
+            return true;
+
+        } catch (Exception e) {
+            System.out.println("Unable to load profile.");
+            return false;
+        }
+    }
+
+    private void resetStats() {
+        wins = 0;
+        losses = 0;
+        draws = 0;
+        gamesPlayed = 0;
+    }
+
+    public void logout() {
+        // Keep this player's data. Only clear the active session.
+        playerName = null;
+        resetStats();
+
+        try {
+            Files.deleteIfExists(CURRENT_PROFILE_FILE);
         } catch (IOException e) {
-
-            System.out.println(
-                    "Unable to remove profile."
-            );
+            System.out.println("Unable to remove current profile session.");
         }
     }
 }
