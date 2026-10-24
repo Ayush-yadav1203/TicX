@@ -1,0 +1,7 @@
+﻿target/
+*.class
+.idea/
+.vscode/
+ticx_history.txt
+ticx_scores.txt
+TicXData/
