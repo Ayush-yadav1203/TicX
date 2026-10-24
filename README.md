@@ -51,5 +51,8 @@ Make sure Java 24 and Maven are installed.
 - 🏅 Achievement system
 - 🌐 Online multiplayer
 - 🎨 More themes
+- 🪪 Authentications
+
+  
 👨‍💻 Author
 Ayush Yadav
