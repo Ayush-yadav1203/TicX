@@ -2,7 +2,7 @@ package com.ticx.ui;
 
 import com.ticx.util.ProfileManager;
 import com.ticx.util.ThemeManager;
-
+import javafx.scene.image.Image;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -192,6 +192,13 @@ public class LoginScreen {
         stage.setTitle(
                 "TicX - Welcome"
         );
+        var iconUrl = getClass().getResource("/images/ticx-logo.png");
+
+        if (iconUrl != null) {
+        stage.getIcons().setAll(
+                new Image(iconUrl.toExternalForm())
+        );
+        }
 
         stage.setScene(
                 scene
