@@ -1,6 +1,30 @@
 TicX
 Modern JavaFX Tic-Tac-Toe Game
 
+<div align="center">
+
+  <img src="src/main/resources/images/ticx-logo.png" alt="TicX Logo" width="220" />
+
+  # TicX
+
+  **Tic-Tac-Toe Reimagined**
+
+  A JavaFX Tic-Tac-Toe game featuring AI opponents, multiple difficulty levels, player profiles, and score tracking.
+
+</div>
+
+---
+
+## Features
+
+- Player vs Player
+- Player vs Computer
+- Easy, Medium, and Hard AI
+- Player profiles and saved statistics
+- Game history and score tracking
+- JavaFX desktop interface
+- Windows installer
+
 ✨ Features
 🎮 Game Modes
 🤖 AI Difficulties
