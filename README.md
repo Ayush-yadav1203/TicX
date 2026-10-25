@@ -14,6 +14,7 @@ Modern JavaFX Tic-Tac-Toe Game
 </div>
 
 ---
+## Download using link [https://github.com/Ayush-yadav1203/TicX/releases/latest/download/TicX-1.0.exe?utm_source=chatgpt.com](https://github.com/Ayush-yadav1203/TicX/archive/refs/heads/main.zip?utm_source=chatgpt.com)
 
 ## Features
 
@@ -40,8 +41,9 @@ JavaFX
 Maven
 Git/GitHub
 
-▶️ How to Run
+▶️ How to Run directly through github
 Make sure Java 24 and Maven are installed.
+open terminal -- mvn javafx:run
 
 
 🎯 Future Improvements
